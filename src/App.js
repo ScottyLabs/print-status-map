@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 // Pages
+import Home from './pages/Home.js';
 // import NotFound from './pages/contact.js';
 
 export default class App extends Component {
@@ -14,7 +15,8 @@ export default class App extends Component {
     return (
       <Router>
         <Switch>
-          {/* <Route exact path="/" component={Home} />
+          <Route exact path="/" component={Home} />
+          {/* 
           <Route path="/404-page-not-found" component={NotFound} />
           <Redirect to="/404-page-not-found" /> */}
         </Switch>
