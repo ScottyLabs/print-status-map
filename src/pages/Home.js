@@ -4,6 +4,7 @@ import {
   useLoadScript,
   Marker,
   InfoWindow,
+  maps,
 } from "@react-google-maps/api";
 import greenPrinter from "../images/green_printer.png";
 import yellowPrinter from "../images/yellow_printer.png";
@@ -96,22 +97,27 @@ export default function Home() {
           return (
             <Marker
               key={printer.name}
+              id={printer.name}
               position={printer.coordinates}
               icon={printerimg}
               onLoad={(marker) => markerLoadHandler(marker, printer)}
-              onClick={(event) => markerClickHandler(event, printer)}
+              onClick={() => {
+                setSelectedPlace(printer);
+              }} //{(event) => markerClickHandler(event, printer)}
             />
           );
         })}
 
-        {infoOpen && selectedPlace && (
+        {selectedPlace && (
           <InfoWindow
-            anchor={markerMap[selectedPlace.id]}
-            onCloseClick={() => setInfoOpen(false)}
+            onCloseClick={() => {
+              setSelectedPlace(null);
+            }}
+            position={selectedPlace.coordinates}
+            pixelOffset={new window.google.maps.Size(500, 0)}
           >
             <div>
-              <h3>{selectedPlace.id}</h3>
-              <div>This is your info window content</div>
+              <h1>{selectedPlace.name}</h1>
             </div>
           </InfoWindow>
         )}
