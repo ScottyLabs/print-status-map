@@ -13,7 +13,7 @@ const colorpicdict = {
 let map;
 const state = {
   printers: null,
-  selectedMarker: null,
+  selectedMarker: null
 }
 
 async function callAPI() {
@@ -54,13 +54,11 @@ function makeMap() {
         map: map,
       });
       marker.setAnimation(google.maps.Animation.DROP);
-      const infowindow = new google.maps.InfoWindow({content: makeInfoBody(printer)});
       marker.addListener("click", () => {
-        if (state.selectedMarker !== null) {
-          state.selectedMarker.close()
-        }
-        infowindow.open(map, marker);
-        state.selectedMarker = infowindow;
+        state.selectedMarker.setContent(makeInfoBody(printer));
+        state.selectedMarker.open(map, marker);
+        map.setZoom(19);
+        map.setCenter(marker.getPosition());
       });
   })
 }
@@ -75,6 +73,7 @@ async function main() {
       streetViewControl: false,
     }
   );
+  state.selectedMarker = new google.maps.InfoWindow({content: ""});
   await callAPI();
   makeMap();
   const infoButton = document.createElement("button");
