@@ -76,7 +76,6 @@ async function main() {
     }
   );
   await callAPI();
-  console.log(state.printers);
   makeMap();
   const infoButton = document.createElement("button");
   infoButton.textContent = "i";
